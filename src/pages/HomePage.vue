@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { highlighterPromise } from '../composables/useHighlighter'
+import AppFooter from '../components/AppFooter.vue'
 
 const code = `import { defineTools } from 'toolry'
 
@@ -60,8 +61,7 @@ onMounted(async () => {
     </div>
   </section>
 
-  <div class="ticks"></div>
-  <div id="spacer"></div>
+  <AppFooter />
 </template>
 
 <style scoped>

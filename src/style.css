@@ -118,16 +118,6 @@ code {
   }
 }
 
-#spacer {
-  height: 4.889rem;
-  /* 88px */
-  border-top: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    height: 3rem;
-    /* 48px @ 16px root */
-  }
-}
 
 .ticks {
   position: relative;

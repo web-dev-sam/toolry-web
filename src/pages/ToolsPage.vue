@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ToolCard from '../components/ToolCard.vue'
 import { tools } from '../data/tools'
+import AppFooter from '../components/AppFooter.vue'
 </script>
 
 <template>
@@ -14,8 +15,7 @@ import { tools } from '../data/tools'
     </div>
   </section>
 
-  <div class="ticks"></div>
-  <div id="spacer"></div>
+  <AppFooter />
 </template>
 
 <style scoped>
