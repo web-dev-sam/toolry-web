@@ -1,20 +1,39 @@
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/webfonts/JetBrainsMono-SemiBold.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/webfonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --text: #9ca3af;
+  --text-h: #f3f4f6;
+  --bg: #16171d;
+  --border: #2e303a;
+  --code-bg: #24252c;
+  --accent: #c084fc;
+  --accent-bg: rgba(192, 132, 252, 0.15);
+  --accent-border: rgba(192, 132, 252, 0.5);
+  --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
 
   --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --shiki-dark-font-weight: 500;
 
-  font: 18px/145% var(--sans);
+  /* px required here — this IS the rem base */
+  font: 18px/145% var(--mono);
+  font-weight: 400;
   letter-spacing: 0.18px;
-  color-scheme: light dark;
+  color-scheme: dark;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -23,21 +42,8 @@
   -moz-osx-font-smoothing: grayscale;
 
   @media (max-width: 1024px) {
+    /* px required — sets the new rem base (16px) inside this breakpoint */
     font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }
 }
 
@@ -46,16 +52,21 @@ body {
 }
 
 h1 {
-  font-family: var(--sans);
+  font-family: var(--mono);
   font-weight: 500;
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 16px 0 12px;
+  font-size: 3.111rem;
+  /* 56px @ 18px root */
+  letter-spacing: -0.093rem;
+  /* -1.68px */
+  margin: 0.889rem 0 0.667rem;
+  /* 16px 0 12px */
   color: var(--text-h);
 
   @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 12px 0 8px;
+    font-size: 2.25rem;
+    /* 36px @ 16px root */
+    margin: 0.75rem 0 0.5rem;
+    /* 12px 0 8px */
   }
 }
 
@@ -66,11 +77,13 @@ p {
 code {
   font-family: var(--mono);
   display: inline-flex;
-  border-radius: 4px;
+  border-radius: 0.222rem;
+  /* 4px */
   color: var(--text-h);
-  font-size: 15px;
+  font-size: 1rem;
   line-height: 135%;
-  padding: 4px 8px;
+  padding: 0.222rem 0.444rem;
+  /* 4px 8px */
   background: var(--code-bg);
 }
 
@@ -89,24 +102,30 @@ code {
 #center {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 1.556rem;
+  /* 28px */
   place-content: center;
   place-items: center;
   flex-grow: 1;
-  padding: 64px 40px 48px;
+  padding: 3.556rem 2.222rem 2.667rem;
+  /* 64px 40px 48px */
 
   @media (max-width: 1024px) {
-    padding: 40px 20px 32px;
-    gap: 20px;
+    padding: 2.5rem 1.25rem 2rem;
+    /* 40px 20px 32px @ 16px root */
+    gap: 1.25rem;
+    /* 20px @ 16px root */
   }
 }
 
 #spacer {
-  height: 88px;
+  height: 4.889rem;
+  /* 88px */
   border-top: 1px solid var(--border);
 
   @media (max-width: 1024px) {
-    height: 48px;
+    height: 3rem;
+    /* 48px @ 16px root */
   }
 }
 
