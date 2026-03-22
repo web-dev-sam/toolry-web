@@ -1,26 +1,29 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { type Tool } from '../data/tools'
-import { highlighterPromise } from '../composables/useHighlighter'
+import { ref, onMounted } from "vue";
+import { type Tool } from "../data/tools";
+import { highlighterPromise } from "../composables/useHighlighter";
+import PmCopyButton from "./PmCopyButton.vue";
 
-const props = defineProps<{ tool: Tool }>()
+const props = defineProps<{ tool: Tool }>();
 
-const open = ref(false)
-const highlighted = ref('')
-const copied = ref(false)
+const open = ref(false);
+const highlighted = ref("");
+const copied = ref(false);
 
 onMounted(async () => {
-  const highlighter = await highlighterPromise
+  const highlighter = await highlighterPromise;
   highlighted.value = highlighter.codeToHtml(props.tool.code.code, {
-    lang: 'typescript',
-    theme: 'github-dark-dimmed',
-  })
-})
+    lang: "typescript",
+    theme: "github-dark-dimmed",
+  });
+});
 
 function copy() {
-  navigator.clipboard.writeText(props.tool.code.copy)
-  copied.value = true
-  setTimeout(() => { copied.value = false }, 2000)
+  navigator.clipboard.writeText(props.tool.code.copy);
+  copied.value = true;
+  setTimeout(() => {
+    copied.value = false;
+  }, 2000);
 }
 </script>
 
@@ -31,7 +34,12 @@ function copy() {
       <p class="description">{{ tool.description }}</p>
     </div>
     <div class="card-footer">
-      <button class="code-btn" @click="open = true">Code</button>
+      <div class="add-cmd">
+        <span class="add-dollar">$</span>
+        <code class="add-code">pnpx toolry --add {{ tool.addPath }}</code>
+        <PmCopyButton :suffix="` --add ${tool.addPath}`" placement="top" small />
+      </div>
+      <button class="code-btn" @click="open = true">Show</button>
     </div>
   </div>
 
@@ -50,7 +58,7 @@ function copy() {
           <pre v-else><code>{{ tool.code.code }}</code></pre>
         </div>
         <div class="modal-footer">
-          <button class="copy-btn" @click="copy">{{ copied ? 'Copied!' : 'Copy code' }}</button>
+          <button class="copy-btn" @click="copy">{{ copied ? "Copied!" : "Copy code" }}</button>
         </div>
       </div>
     </div>
@@ -64,7 +72,6 @@ function copy() {
   background: var(--code-bg);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .card-body {
@@ -90,10 +97,37 @@ function copy() {
 }
 
 .card-footer {
-  padding: 0.889rem 1.333rem;
+  padding: 0.667rem 0.667rem 0.667rem 1.333rem;
   border-top: 1px solid var(--border);
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.667rem;
+}
+
+.add-cmd {
+  display: flex;
+  align-items: center;
+  gap: 0.444rem;
+  min-width: 0;
+}
+
+.add-dollar {
+  font-family: var(--mono);
+  font-size: 0.667rem;
+  color: var(--accent);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.add-code {
+  font-size: 0.722rem;
+  color: var(--text);
+  background: none;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .code-btn {
@@ -105,7 +139,9 @@ function copy() {
   border-radius: 0.333rem;
   padding: 0.333rem 0.889rem;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
 }
 
 .code-btn:hover {

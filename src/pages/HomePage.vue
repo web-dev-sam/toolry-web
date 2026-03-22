@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { highlighterPromise } from '../composables/useHighlighter'
-import AppFooter from '../components/AppFooter.vue'
+import { ref, onMounted } from "vue";
+import { highlighterPromise } from "../composables/useHighlighter";
+import AppFooter from "../components/AppFooter.vue";
+import PmCopyButton from "../components/PmCopyButton.vue";
 
 const code = `import { defineTools } from 'toolry'
 
@@ -24,17 +25,17 @@ export default defineTools({
   run: ({ domain, days, keySize }) =>
     \`openssl req -x509 -newkey rsa:\${keySize} -keyout key.pem -out cert.pem\`
       + \` -sha256 -days \${days} -nodes -subj "/CN=\${domain}"\`,
-})`
+})`;
 
-const highlighted = ref('')
+const highlighted = ref("");
 
 onMounted(async () => {
-  const highlighter = await highlighterPromise
+  const highlighter = await highlighterPromise;
   highlighted.value = highlighter.codeToHtml(code, {
-    lang: 'typescript',
-    theme: 'github-dark-dimmed',
-  })
-})
+    lang: "typescript",
+    theme: "github-dark-dimmed",
+  });
+});
 </script>
 
 <template>
@@ -45,7 +46,13 @@ onMounted(async () => {
       <p>Write tools in JS/TS, run shell commands, get a beautiful interactive CLI.</p>
     </div>
     <div id="install">
-      <code>pnpm install toolry</code>
+      <div id="command">
+        <span id="dollar">$</span>
+        <code>npx toolry@latest</code>
+        <div id="copy-divider" />
+        <PmCopyButton />
+      </div>
+      <div id="install-hint"># sets up config · creates a sample tool · launches the UI</div>
     </div>
     <div id="demo">
       <video src="/demo.mp4" autoplay loop muted playsinline />
@@ -90,15 +97,53 @@ onMounted(async () => {
   margin-bottom: 2rem;
 }
 
-#install code {
-  font-size: 0.778rem;
-  color: var(--text);
-  padding: 0.444rem 0.889rem;
+#install {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.556rem;
+}
+
+#command {
+  display: flex;
+  align-items: center;
+  gap: 0.667rem;
+  padding: 0.444rem 0.444rem 0.444rem 1.111rem;
   border: 1px solid var(--border);
   border-radius: 0.444rem;
   background: var(--code-bg);
+}
+
+#dollar {
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--accent);
+  user-select: none;
+}
+
+#command > code {
+  font-size: 1rem;
+  color: var(--text-h);
+  background: none;
+  padding: 0;
   cursor: default;
   user-select: all;
+}
+
+#copy-divider {
+  width: 1px;
+  height: 1.2em;
+  background: var(--border);
+  flex-shrink: 0;
+  margin-left: 0.222rem;
+}
+
+#install-hint {
+  font-size: 0.611rem;
+  font-family: var(--mono);
+  color: var(--text);
+  opacity: 0.45;
+  letter-spacing: 0.2px;
 }
 
 #demo {
